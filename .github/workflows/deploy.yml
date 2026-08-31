@@ -83,7 +83,7 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-unknown-unknown
+          targets: wasm32v1-none
 
       - name: Cache cargo registry
         uses: actions/cache@v6
@@ -110,16 +110,16 @@ jobs:
             ${{ runner.os }}-cargo-build-target-
 
       - name: Build contract
-        run: cargo build --release -p prompt-hash --target wasm32-unknown-unknown
+        run: cargo build --release -p prompt-hash --target wasm32v1-none
         env:
           CARGO_TERM_COLOR: always
 
       - name: List WASM artifacts
-        run: ls -lah target/wasm32-unknown-unknown/release/*.wasm
+        run: ls -lah target/wasm32v1-none/release/*.wasm
 
       - name: Generate WASM checksums
         run: |
-          cd target/wasm32-unknown-unknown/release
+          cd target/wasm32v1-none/release
           sha256sum *.wasm > ../../../wasm-checksums.txt
           sha256sum ../../../wasm-checksums.txt > ../../../wasm-checksums.txt.sha256
 
@@ -127,7 +127,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: contract-wasm-${{ github.sha }}
-          path: target/wasm32-unknown-unknown/release/*.wasm
+          path: target/wasm32v1-none/release/*.wasm
           retention-days: 30
           if-no-files-found: warn
 
@@ -248,7 +248,7 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-unknown-unknown
+          targets: wasm32v1-none
 
       - name: Install cargo-cyclonedx
         run: cargo install cargo-cyclonedx
