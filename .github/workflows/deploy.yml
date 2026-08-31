@@ -240,13 +240,10 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Install CycloneDX tooling
-        run: npm install -g @cyclonedx/cyclonedx-npm
-
       - name: Generate frontend SBOM (CycloneDX)
         run: |
           mkdir -p sbom
-          cyclonedx-npm --output-format JSON --output-file sbom/frontend-sbom.json
+          yarn dlx -q @cyclonedx/yarn-plugin-cyclonedx --output-format JSON --output-file sbom/frontend-sbom.json
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
