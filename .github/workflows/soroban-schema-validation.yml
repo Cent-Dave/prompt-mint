@@ -33,7 +33,7 @@ jobs:
       - name: Set up Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: 1.89.0
+          toolchain: 1.91.1
           targets: wasm32v1-none
 
       - name: Set up Node.js
