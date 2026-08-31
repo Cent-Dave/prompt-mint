@@ -884,7 +884,7 @@ export const PromptModal: React.FC<PromptModalProps> = ({
               </div>
             </div>
             <ReviewList reviews={reviewData.reviews} isLoading={reviewsLoading} promptId={itemId} currentUserAddress={wallet?.address} onReviewUpdate={() => queryClient.invalidateQueries({ queryKey: ["reviews", itemId] })} />
-            {reviewData.pagination.totalPages > 1 && (
+            {reviewData?.pagination && reviewData.pagination.totalPages > 1 && (
               <div className="mt-5 flex items-center justify-between text-sm text-slate-400">
                 <span>Page {reviewData.pagination.page} of {reviewData.pagination.totalPages}</span>
                 <div className="flex gap-2"><button className="rounded border border-white/10 px-3 py-1 disabled:opacity-40" disabled={reviewPage === 1} onClick={() => setReviewPage((page) => page - 1)}>Previous</button><button className="rounded border border-white/10 px-3 py-1 disabled:opacity-40" disabled={!reviewData.pagination.hasMore} onClick={() => setReviewPage((page) => page + 1)}>Next</button></div>

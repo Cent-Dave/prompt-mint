@@ -1,3 +1,4 @@
+import i18n from "../i18n";
 import { classifyContractError } from "./stellar/promptHashClient";
 
 const TX_ERROR_MAP: Record<string, string> = {

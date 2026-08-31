@@ -14,6 +14,8 @@ import { TransactionProvider } from "@/components/TransactionProvider";
 import { CurrencyProvider } from "@/providers/CurrencyProvider";
 import { KeyboardShortcutsProvider } from "@/providers/KeyboardShortcutsProvider";
 
+import { CartProvider } from "@/providers/CartProvider";
+
 const defaultWallet: WalletContextType = {
   address: undefined,
   network: undefined,
@@ -64,11 +66,15 @@ export function renderWithProviders(
   const Wrapper = ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={queryClient}>
       <WalletContext value={walletValue}>
-        <CurrencyProvider><TransactionProvider>
-          <MemoryRouter initialEntries={[route]}>
-            <KeyboardShortcutsProvider>{children}</KeyboardShortcutsProvider>
-          </MemoryRouter>
-        </TransactionProvider></CurrencyProvider>
+        <CurrencyProvider>
+          <CartProvider>
+            <TransactionProvider>
+              <MemoryRouter initialEntries={[route]}>
+                <KeyboardShortcutsProvider>{children}</KeyboardShortcutsProvider>
+              </MemoryRouter>
+            </TransactionProvider>
+          </CartProvider>
+        </CurrencyProvider>
       </WalletContext>
     </QueryClientProvider>
   );

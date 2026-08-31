@@ -56,11 +56,19 @@ const ACTIVITY_EVENTS: (keyof WindowEventMap)[] = [
   "wheel",
 ];
 
-const initialState = {
+export interface WalletState {
+  address?: string;
+  network?: string;
+  networkPassphrase?: string;
+  status: WalletStatus;
+  error?: string;
+}
+
+const initialState: WalletState = {
   address: undefined,
   network: undefined,
   networkPassphrase: undefined,
-  status: "idle" as WalletStatus,
+  status: "idle",
   error: undefined,
 };
 
@@ -70,7 +78,7 @@ const boundSignMessage = wallet.signMessage.bind(wallet);
 export const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, setState] = useState<Omit<WalletContextType, "connect" | "disconnect" | "reconnect" | "signTransaction" | "signMessage">>(initialState);
+  const [state, setState] = useState<WalletState>(initialState);
   const isConnectingRef = useRef(false);
   const reconnectAttemptsRef = useRef(0);
   const maxReconnectAttempts = 3;

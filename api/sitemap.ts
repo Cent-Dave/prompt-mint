@@ -2,7 +2,9 @@ import { withObservability } from "../src/lib/observability/wrapper";
 import connectDb from "../server/src/db/connectDb";
 import Prompt from "../server/src/models/Prompt";
 
-const APP_URL = process.env.APP_URL ?? "https://prompthash.io";
+function getAppUrl(): string {
+  return process.env.APP_URL ?? "https://prompthash.io";
+}
 
 function escapeXml(value: string): string {
   return value
@@ -30,7 +32,8 @@ async function handler(req: any, res: any) {
     return;
   }
 
-  const urls = getBaseUrls().map((path) => `${APP_URL}${path}`);
+  const appUrl = getAppUrl();
+  const urls = getBaseUrls().map((path) => `${appUrl}${path}`);
   let error: string | null = null;
 
   try {
@@ -43,7 +46,7 @@ async function handler(req: any, res: any) {
       const promptId = String(prompt._id);
       const lastMod = toIsoDate(prompt.updatedAt);
       return {
-        loc: `${APP_URL}/browse?promptId=${encodeURIComponent(promptId)}`,
+        loc: `${appUrl}/browse?promptId=${encodeURIComponent(promptId)}`,
         lastMod,
       };
     });

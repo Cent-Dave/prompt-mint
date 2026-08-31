@@ -177,6 +177,7 @@ describe("bundle unlock API abuse protection & lockout", () => {
         bundleId,
         address: buyer.publicKey(),
         signedMessage: wrongSignature,
+        captchaToken: i >= 3 ? "test-captcha-token-valid" : undefined,
       });
       expect(statusCode).toBe(401);
       expect(responseData.code).toBe(ErrorCode.INVALID_SIGNATURE);
@@ -188,6 +189,7 @@ describe("bundle unlock API abuse protection & lockout", () => {
       bundleId,
       address: buyer.publicKey(),
       signedMessage: wrongSignature,
+      captchaToken: "test-captcha-token-valid",
     });
 
     expect(statusCode).toBe(423);

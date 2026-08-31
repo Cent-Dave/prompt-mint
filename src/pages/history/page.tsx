@@ -28,6 +28,7 @@ import type {
   TransactionType,
 } from "@/lib/history/transactions";
 import { explorerTxUrl } from "@/lib/stellar/explorer";
+import { formatXLM } from "@/lib/stellar/format";
 
 const TYPE_META: Record<
   TransactionType,
